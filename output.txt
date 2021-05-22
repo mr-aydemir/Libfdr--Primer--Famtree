@@ -25,9 +25,10 @@ Donald Pennington
   Children: 
     Theresa Pennington
     Carol Oppenheim
+    Jasper Pennington
     
 Hester Oppenheim
-  Sex: Female
+  Sex: Undefined
   Father: Jacob Oppenheim
   Mother: Carol Oppenheim
   Children: None
@@ -45,4 +46,5 @@ Patricia Pennington
   Children: 
     Theresa Pennington
     Carol Oppenheim
+    Jasper Pennington
     

@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
     int childcount = 0;
     //Dosya Okuma Döngüsü
     char s[100], v[100];
-    while (fscanf(f, "%s %[^\n]", s, v) != EOF)
+    while /*(scanf("%s %[^\n]", s, v) != EOF)*/(fscanf(f, "%s %[^\n]", s, v) != EOF)
     {
         
         if (strstr(s, "PERSON") != NULL) //if (s == "PERSON") //strstr(s, "PERSON") != NULL
@@ -35,7 +35,6 @@ int main(int argc, char *argv[])
         else if (strstr(s, "FATHER") != NULL&&strstr(s, "FATHER_OF") == NULL)
         {
             strcpy(people[i - 1].Father, v);
-            //printf("father: %s child: %s\n",people[i - 1].Father, people[i - 1].name);
         }
 
         else if (strstr(s, "MOTHER") != NULL&&strstr(s, "MOTHER_OF") == NULL)
@@ -59,7 +58,6 @@ int main(int argc, char *argv[])
             strcpy(people[i - 1].sex,v);
         }
         printf("%d", i);
-        printf("father: %s child: %s\n",people[0].Father, people[0].name);
     }
 
     int liste_uzunlugu = i;
@@ -76,20 +74,70 @@ int main(int argc, char *argv[])
                 {
                     if (strstr(people[t].name, people[j].children[p]) != NULL)
                     { 
-                        if (strstr(people[j].sex , "M") != NULL && strlen(people[t].Father)==0)
+                        if (strstr(people[j].sex , "M") != NULL)
                         {
                             strcpy(people[t].Father, people[j].name);
                             
                         }
                         else{
-                            if (strlen(people[t].Mother)==0)
-                            {
-                                strcpy(people[t].Mother, people[j].name);
-                            } 
+                            strcpy(people[t].Mother, people[j].name);
                         }
                         break;
                     }
                 }
+            }
+        }
+        if (strlen(people[j].Mother) > 0)
+        {
+            for (int p = 0; strlen(people[p].name)>0; p++)
+            {
+                if (strstr(people[p].name, people[j].Mother)!=NULL)
+                {
+                    int found = 0;
+                    int t = 0;
+                    for (; strlen(people[p].children[t])>0; t++)
+                    {
+                        if (strstr(people[p].children[t], people[j].name)!=NULL)
+                        {
+                            found = 1;
+                            break;
+                        }
+                        
+                    }
+                    if (!found)
+                    {
+                        strcpy(people[p].children[t], people[j].name);
+                    }
+                    break;
+                }
+                
+            }
+            
+        }
+        if (strlen(people[j].Father) > 0)
+        {
+            for (int p = 0; strlen(people[p].name)>0; p++)
+            {
+                if (strstr(people[p].name, people[j].Father)!=NULL)
+                {
+                    int found = 0;
+                    int t = 0;
+                    for (; strlen(people[p].children[t])>0; t++)
+                    {
+                        if (strstr(people[p].children[t], people[j].name)!=NULL)
+                        {
+                            found = 1;
+                            break;
+                        }
+                        
+                    }
+                    if (!found)
+                    {
+                        strcpy(people[p].children[t], people[j].name);
+                    }
+                    break;
+                }
+                
             }
         }
     }
@@ -100,11 +148,16 @@ int main(int argc, char *argv[])
     for (int j = 0; j < i; j++)
     {
         
-        char sex[] = "Female";
+        char sex[] = "Undefined";
         if (strstr(people[j].sex , "M") != NULL)
         {
             strcpy(sex , "Male");
         }
+        else if (strstr(people[j].sex , "F") != NULL)
+        {
+            strcpy(sex , "Female");
+        }
+
         char mother[100];
         if (strlen(people[j].Mother)>0)
         {
@@ -114,7 +167,6 @@ int main(int argc, char *argv[])
         char father[100];
          if (strlen(people[j].Father)>0)
         {
-            //printf("father: %s child: %s\n",people[j].Father, people[j].name);
             strcpy(father, people[j].Father);
         }
         else strcpy(father, "Unknown");
@@ -132,7 +184,6 @@ int main(int argc, char *argv[])
             }
         }
         else strcpy(children ,"None\n");
-        //printf(children);
         fprintf(fp, "%s\n  Sex: %s\n  Father: %s\n  Mother: %s\n  Children: %s\n", people[j].name, sex,  father, mother, children);
     }
    fclose(fp);
