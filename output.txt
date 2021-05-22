@@ -1,0 +1,48 @@
+Jasper Pennington
+  Sex: Male
+  Father: Donald Pennington
+  Mother: Patricia Pennington
+  Children: 
+    Katherine Pennington
+    
+Hannah Pennington
+  Sex: Female
+  Father: Unknown
+  Mother: Unknown
+  Children: 
+    Katherine Pennington
+    
+Katherine Pennington
+  Sex: Female
+  Father: Jasper Pennington
+  Mother: Hannah Pennington
+  Children: None
+
+Donald Pennington
+  Sex: Male
+  Father: Unknown
+  Mother: Unknown
+  Children: 
+    Theresa Pennington
+    Carol Oppenheim
+    
+Hester Oppenheim
+  Sex: Female
+  Father: Jacob Oppenheim
+  Mother: Carol Oppenheim
+  Children: None
+
+George Ackerman
+  Sex: Male
+  Father: Unknown
+  Mother: Unknown
+  Children: None
+
+Patricia Pennington
+  Sex: Female
+  Father: Unknown
+  Mother: Unknown
+  Children: 
+    Theresa Pennington
+    Carol Oppenheim
+    

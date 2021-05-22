@@ -1,0 +1,36 @@
+Bob
+  Sex: Male
+  Mother: Unknown
+  Father: Unknown
+  Children: 
+    Frank
+    Lester
+    Diana
+    
+Nancy
+  Sex: Female
+  Mother: Unknown
+  Father: Unknown
+  Children: 
+    Frank
+    Lester
+    Diana
+    
+Diana
+  Sex: Female
+  Mother: Nancy
+  Father: Bob
+  Children: None
+
+Frank
+  Sex: Male
+  Mother: Nancy
+  Father: Bob
+  Children: None
+
+Lester
+  Sex: Male
+  Mother: Nancy
+  Father: Bob
+  Children: None
+
