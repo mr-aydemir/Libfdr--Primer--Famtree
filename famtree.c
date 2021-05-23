@@ -1,3 +1,9 @@
+/*Eksikler: 
+    Bahsi geçen ama Person olarak bulunmayan insanlar oluşturulacak, çocuklar anne babalar gibi.
+    Anne Baba çocuklardan önce gelecek. Şekilde düzenli sıralama yaptırılacak.
+*/
+
+
 #include <stdio.h>
 
 #include <string.h>
@@ -14,7 +20,7 @@ int main(int argc, char *argv[])
 {
     Person people[100];
     FILE *f = fopen("fam2.txt", "r");
-    int i = 0;
+    int i = 0; // people listesindeki kişi sayısını tutacak sayı
     int childcount = 0;
     //Dosya Okuma Döngüsü
     char s[100], v[100];
@@ -57,89 +63,148 @@ int main(int argc, char *argv[])
         {
             strcpy(people[i - 1].sex,v);
         }
-        printf("%d", i);
     }
 
     int liste_uzunlugu = i;
-    //Anne Baba Belirleme Döngüsü
+    
     for (int j = 0; j < i; j++)
-    {
-        if (strlen(people[j].children[0]) > 0)
+    {   //Anne Baba Belirleme Döngüsü
+        if (strlen(people[j].children[0]) > 0)//çocuğu var mı?
         {
             
-            for (int p = 0; strlen(people[j].children[p])>0; p++)
+            for (int p = 0; strlen(people[j].children[p])>0; p++)//boş elemana kadar kontrol et
             {
-                
-                for (int t = 0; t < i; t++)
+                int found = 0;
+                for (int t = 0; t < i&&!found; t++)//bütün insanları kontrol etme çocuğu bulma döngüsü
                 {
-                    if (strstr(people[t].name, people[j].children[p]) != NULL)
+                    if (strstr(people[t].name, people[j].children[p]) != NULL)//çocuk ile bulunan insanın ismi aynı ise
                     { 
-                        if (strstr(people[j].sex , "M") != NULL)
+                        found = 1;
+                        //çocuğu kontrol edilenin cinsiyetine göre baba ve anne bilgisini çocuğun bilgilerine girmek
+                        if (strstr(people[j].sex , "M") != NULL)//Male, Erkek ise
                         {
                             strcpy(people[t].Father, people[j].name);
-                            
+                        }
+                        else if(strstr(people[j].sex , "F") != NULL)//Female, Kadın ise
+                        {
+                            strcpy(people[t].Mother, people[j].name);
                         }
                         else{
-                            strcpy(people[t].Mother, people[j].name);
                         }
                         break;
                     }
                 }
+                if (found==0)//çocuk bulunamadı ise oluşturmak için
+                {
+                    
+                    Person Person;
+                    strcpy(Person.name, people[j].children[p]);
+                    people[i] = Person;
+                    if (strstr(people[j].sex , "M") != NULL)//Male, Erkek ise
+                    {
+                        strcpy(people[i].Father, people[j].name);
+                    }
+                    else if(strstr(people[j].sex , "F") != NULL)//Female, Kadın ise
+                    {
+                        strcpy(people[i].Mother, people[j].name);
+                    }
+                    else{}
+                    i++;
+                }
+                
+
             }
         }
-        if (strlen(people[j].Mother) > 0)
+        
+        //Çocuk belirleme döngüleri
+        if (strlen(people[j].Mother) > 0)// Annesi belirlenmiş ise
         {
-            for (int p = 0; strlen(people[p].name)>0; p++)
+            int found = 0;
+            for (int p = 0; strlen(people[p].name)>0; p++)//Boş elamana denk gelene kadar döngü
             {
-                if (strstr(people[p].name, people[j].Mother)!=NULL)
+                
+                if (strstr(people[p].name, people[j].Mother)!=NULL)//aranılan kişi bulundu ise 
                 {
-                    int found = 0;
+                    found = 1;
+                    int t_found = 0;
                     int t = 0;
                     for (; strlen(people[p].children[t])>0; t++)
                     {
                         if (strstr(people[p].children[t], people[j].name)!=NULL)
                         {
-                            found = 1;
+                            t_found = 1;
                             break;
                         }
                         
                     }
-                    if (!found)
+                    if (!t_found)
                     {
                         strcpy(people[p].children[t], people[j].name);
+                        if (strlen(people[p].sex)<=0)
+                        {
+                             strcpy(people[p].sex, "F");
+                        }
+                        
                     }
                     break;
                 }
-                
+            }
+            if (!found)//Anne bulunamadı ise oluşturmak için
+            {
+                Person Person;
+                strcpy(Person.name, people[j].Mother);
+                people[i] = Person;
+                strcpy(people[i].sex, "F");
+                strcpy(people[i].children[0], people[j].name);
+                //printf("sex: %s\n", people[i].sex);
+                i++;
             }
             
         }
         if (strlen(people[j].Father) > 0)
         {
+            int found = 0;
             for (int p = 0; strlen(people[p].name)>0; p++)
             {
+                
                 if (strstr(people[p].name, people[j].Father)!=NULL)
                 {
-                    int found = 0;
+                    found = 1;
+                    int t_found = 0;
                     int t = 0;
                     for (; strlen(people[p].children[t])>0; t++)
                     {
                         if (strstr(people[p].children[t], people[j].name)!=NULL)
                         {
-                            found = 1;
+                            t_found = 1;
                             break;
                         }
                         
                     }
-                    if (!found)
+                    if (!t_found)
                     {
                         strcpy(people[p].children[t], people[j].name);
+                        if (strlen(people[p].sex)<=0)
+                        {
+                             strcpy(people[p].sex, "M");
+                        }
                     }
                     break;
                 }
                 
             }
+            if (!found)//Baba bulunamadı ise oluşturmak için
+            {
+                Person Person;
+                strcpy(Person.name, people[j].Father);
+                people[i] = Person;
+                strcpy(people[i].sex, "M");
+                strcpy(people[i].children[0], people[j].name);
+                i++;
+            }
         }
+        
+
     }
     
     FILE * fp;
