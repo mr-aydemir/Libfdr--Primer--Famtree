@@ -1,8 +1,12 @@
 /*Eksikler: 
-    Bahsi geçen ama Person olarak bulunmayan insanlar oluşturulacak, çocuklar anne babalar gibi.
     Anne Baba çocuklardan önce gelecek. Şekilde düzenli sıralama yaptırılacak.
+    Çift anne, baba olma durumu hata mesajı olarak verilecek.
+    Bir kadının baba, bir erkeğin anne olması durumu hatası verilecek.
 */
-
+/*Tamamlanan:
+    Bahsi geçen ama Person olarak bulunmayan insanlar oluşturulacak, çocuklar anne babalar gibi.
+    input dosyası istenen düzende yazdırılacak.
+*/
 
 #include <stdio.h>
 
@@ -205,6 +209,14 @@ int main(int argc, char *argv[])
         }
         
 
+    }
+    //Baba, Anne Çocuklar Sıralı Liste: (Daha tamamlanmadı)
+    for (int j = 0; j < i; j++)
+    {
+        Person family[20];
+        if(strlen(people[j].Father)>0){
+
+        }
     }
     
     FILE * fp;
